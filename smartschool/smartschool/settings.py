@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'account.apps.AccountConfig',
     'order.apps.OrderConfig',
+    'corsheaders'
+    
     
 ]
 
@@ -58,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'smartschool.urls'
@@ -162,3 +166,5 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # settings.py
 
 #AUTH_USER_MODEL = 'account.CustomUser'
+CORS_ALLOWED_ORIGINS=[
+'hhtp://localhost:3000']
