@@ -23,6 +23,9 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, null=True, on_delete=models.CASCADE,related_name='orderitems')
     name = models.CharField(max_length=200, default="", blank=False)
     price = models.DecimalField( max_digits=7, decimal_places=2,blank=False )
+    status = models.CharField(max_length=50, default="pending", blank=False)
+
+    
 
     def __str__(self):
         return self.name

@@ -19,9 +19,9 @@ class CreateOrderView(APIView):
         
         # Extract required fields from request data
         phone_number = request.data.get('phone_number')
-        city = request.data.get('city')
+        #city = request.data.get('city')
         academic_year = request.data.get('academic_year', '')
-        country = request.data.get('country', '')
+       # country = request.data.get('country', '')
         formation_id = request.data.get('formation_id')
         
         # Check if phone_number, city, and formation_id are provided
