@@ -12,7 +12,7 @@ from django.db.models import Avg
 
 @api_view(['GET'])
 def get_all_formations(request):
-   
+
    formations = formation.objects.all()
    serializer = FormationSerializer(formations,many= True)
    print(formations)

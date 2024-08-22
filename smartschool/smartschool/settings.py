@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import cloudinary_storage
 from datetime import timedelta
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -47,7 +48,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'account.apps.AccountConfig',
     'order.apps.OrderConfig',
-    'corsheaders'
+    'corsheaders',
     
     
 ]
@@ -154,17 +155,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #Media
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dlymv9lhe',
-    'API_KEY' : '956463465927782', 
-    'API_SECRET' : 'eRylWV5NbOWlI-o5im3YFriAed0',
-}
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_ROOT = os.path.join(BASE_DIR,"media/")
+MEDIA_URL = "media/"
+#CLOUDINARY_STORAGE = {
+   # 'CLOUD_NAME': 'dlymv9lhe',
+  #  'API_KEY' : '956463465927782', 
+ #   'API_SECRET' : 'eRylWV5NbOWlI-o5im3YFriAed0',
+#}
+
+#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
  
 # settings.py
 
 #AUTH_USER_MODEL = 'account.CustomUser'
-CORS_ALLOWED_ORIGINS=[
-'hhtp://localhost:3000']
+
+CORS_ALLOWED_ORIGINS = [
+    'https://futuresite.online',
+]
+
+#CORS_ALLOWED_ORIGINS= True 
