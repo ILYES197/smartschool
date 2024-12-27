@@ -11,12 +11,15 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import cloudinary_storage
+#import cloudinary_storage
 from datetime import timedelta
+import os
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,8 +31,9 @@ SECRET_KEY = 'django-insecure-r6gi(889=xf98l05y(zl-#7hy5*c-nn*nf7sjtcp1mpk&=ug74
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ ]
-
+ALLOWED_HOSTS = [
+     'smartschool.pythonanywhere.com',
+    ]
 
 # Application definition
 
@@ -48,8 +52,8 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'order.apps.OrderConfig',
     'corsheaders'
-    
-    
+
+
 ]
 
 MIDDLEWARE = [
@@ -60,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-     
+
     'corsheaders.middleware.CorsMiddleware',
 ]
 
@@ -95,12 +99,12 @@ DATABASES = {
     }
 }
 REST_FRAMEWORK = {
-  
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        
+
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
-    
+
 }
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=20),
@@ -147,6 +151,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -154,17 +160,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #Media
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dlymv9lhe',
-    'API_KEY' : '956463465927782', 
-    'API_SECRET' : 'eRylWV5NbOWlI-o5im3YFriAed0',
-}
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
- 
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR,"media/")
+MEDIA_URL = "media/"
+#CLOUDINARY_STORAGE = {
+ #   'CLOUD_NAME': 'dlymv9lhe',
+  #  'API_KEY' : '956463465927782',
+   # 'API_SECRET' : 'eRylWV5NbOWlI-o5im3YFriAed0',
+#}
+
+#CLOUDINARY_URL = f"cloudinary://{CLOUDINARY_STORAGE['API_KEY']}:{CLOUDINARY_STORAGE['API_SECRET']}@{CLOUDINARY_STORAGE['CLOUD_NAME']}"
+
+
+
+#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
 # settings.py
 
 #AUTH_USER_MODEL = 'account.CustomUser'
-CORS_ALLOWED_ORIGINS=[
-'hhtp://localhost:3000']
+CORS_ALLOWED_ORIGINS = [
+    'https://futuresite.online',
+]
+
