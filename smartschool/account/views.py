@@ -10,7 +10,9 @@ from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 #from .models import CustomUser
-
+from .models import حساب_تجاري
+from .serializers import حساب_تجاري_سيريالايزر
+ 
 
 
 @api_view(['POST'])
@@ -46,3 +48,23 @@ def register(request):
 def current_user(request):
     user = UserSerializer(request.user, many=False)
     return Response(user.data)
+
+
+from rest_framework import viewsets, permissions
+from .models import حساب_تجاري
+from .serializers import حساب_تجاري_سيريالايزر
+
+class حساب_تجاري_ViewSet(viewsets.ModelViewSet):
+    queryset = حساب_تجاري.objects.all()
+    serializer_class = حساب_تجاري_سيريالايزر
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """يستطيع المستخدم مشاهدة حسابه فقط، بينما الـ admin يمكنه مشاهدة الجميع"""
+        if self.request.user.is_staff:
+            return حساب_تجاري.objects.all()
+        return حساب_تجاري.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        """عند إنشاء الحساب، يتم ربطه بالمستخدم الحالي"""
+        serializer.save(user=self.request.user)
