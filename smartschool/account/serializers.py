@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from rest_framework import serializers
  
-from .models import حساب_تجاري
+
+
 
 #from  .models import CustomUser  
 
@@ -25,20 +27,13 @@ class UserSerializer(serializers.ModelSerializer):
         model =  User
         fields = ('first_name','last_name', 'email', 'username' ) 
         
-   
+# serializers.py
+from rest_framework import serializers
+from account.models import Profile
 
-class حساب_تجاري_سيريالايزر(serializers.ModelSerializer):
-    رابط_الإحالة_كامل = serializers.SerializerMethodField()  # إضافة رابط الإحالة الكامل
-
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = حساب_تجاري
-        fields = [
-            'user', 'رقم_الحساب', 'نوع_الحساب', 'الاسم', 'اللقب', 'العنوان',
-            'تاريخ_الميلاد', 'الرصيد_المالي', 'عدد_مرات_التحويل', 'رابط_الإحالة', 'رابط_الإحالة_كامل'
-        ]
-        read_only_fields = ['رقم_الحساب', 'نوع_الحساب', 'الرصيد_المالي', 'عدد_مرات_التحويل']
+        model = Profile
+        fields = '__all__'  # أو حدد الحقول التي تريدها فقط
 
-    def get_رابط_الإحالة_كامل(self, obj):
-        return obj.get_رابط_الإحالة()
-
-
+ 

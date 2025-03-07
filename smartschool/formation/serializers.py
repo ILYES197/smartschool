@@ -8,8 +8,11 @@ class FormationSerializer(serializers.ModelSerializer):
         fields = "__all__"
         
 class CommentSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()  # إظهار اسم المستخدم بدلًا من ID
+    user = serializers.SerializerMethodField()  # استخدام دالة مخصصة لجلب الاسم
 
     class Meta:
         model = Comment
         fields = '__all__'
+
+    def get_user(self, obj):
+        return obj.user.get_full_name() if obj.user else "مجهول"

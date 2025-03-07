@@ -1,7 +1,6 @@
 from django.contrib import admin
-from  .models import حساب_تجاري
-# Register your models here.
-admin.site.register(حساب_تجاري)
  
-
+from .models import Profile
+# Register your models here.
+admin.site.register(Profile)
  

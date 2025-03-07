@@ -1,12 +1,17 @@
 from django.urls import path
 from . import views
-from .views import حساب_تجاري_ViewSet
+from .views import ProfileListCreateView, ProfileRetrieveUpdateDestroyView
+
+from rest_framework.routers import DefaultRouter
+from django.urls import path, include  # استيراد include
 
 
+
+ 
 urlpatterns = [
     path('register/', views.register,name='register'), 
     path('userinfo/', views.current_user,name='user_info'), 
-    path('حساب_تجاري/', حساب_تجاري_ViewSet.as_view({'get': 'list', 'post': 'create'}), name='حساب_تجاري-قائمة'),
-    path('حساب_تجاري/<int:pk>/', حساب_تجاري_ViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='حساب_تجاري-تفاصيل'),
-
+    path('profiles/', ProfileListCreateView.as_view(), name='profile-list-create'),
+    path('profiles/<int:pk>/', ProfileRetrieveUpdateDestroyView.as_view(), name='profile-detail'),
+     
 ]
