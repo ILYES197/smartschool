@@ -10,6 +10,7 @@ import uuid  # ✅ إضافة استيراد uuid
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    
     account_number = models.CharField(max_length=50, unique=True)  # رقم الحساب التجاري
     account_type = models.CharField(max_length=50)  # نوع الحساب التجاري
     first_name = models.CharField(max_length=100)  # الاسم الأول
@@ -21,7 +22,7 @@ class Profile(models.Model):
     referral_link = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)  # رابط الإحالة الفريد
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.account_number}"
+        return f"{self.user.id} - {self.first_name} {self.last_name}"
 
     def get_referral_link(self):
         """إرجاع رابط الإحالة الخاص بالمستخدم"""
