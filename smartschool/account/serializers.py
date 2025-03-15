@@ -1,8 +1,7 @@
-from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework import serializers
- 
-
+from account.models import Profile
+from .models import TransferRequest
 
 
 #from  .models import CustomUser  
@@ -34,6 +33,12 @@ from account.models import Profile
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = '__all__'  # أو حدد الحقول التي تريدها فقط
+        fields = '__all__'   
+ 
+class TransferRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TransferRequest
+        fields = '__all__'   
+        read_only_fields = ['id', 'created_at']  # جعل بعض الحقول للقراءة فقط
 
  

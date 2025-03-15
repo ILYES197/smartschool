@@ -14,6 +14,10 @@ from rest_framework import generics
 from account.models import Profile
 from .serializers import ProfileSerializer
 
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .models import TransferRequest
+from .serializers import TransferRequestSerializer
 
 
 @api_view(['POST'])
@@ -64,3 +68,12 @@ class ProfileRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
  
 
  
+
+class TransferRequestViewSet(viewsets.ModelViewSet):
+    queryset = TransferRequest.objects.all().order_by('-created_at')  # ترتيب الطلبات من الأحدث إلى الأقدم
+    serializer_class = TransferRequestSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]  # السماح بعرض الطلبات للجميع ولكن التعديل يحتاج إلى تسجيل دخول
+
+    def perform_create(self, serializer):
+        """حفظ الطلب مع تاريخ الإنشاء تلقائيًا"""
+        serializer.save()
