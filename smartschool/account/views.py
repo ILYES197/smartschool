@@ -56,20 +56,18 @@ def current_user(request):
     user = UserSerializer(request.user, many=False)
     return Response(user.data)
 
-# views.py
- 
+# views.py 
+from rest_framework.views import APIView
+from .serializers import ProfileSerializer
 
-
-class ProfileListView(generics.ListAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]  # يجب أن يكون المستخدم مسجلاً للدخول
 
-# استرجاع ملف شخصي واحد عبر الـ ID
-class ProfileDetailView(generics.RetrieveAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        profile = request.user.profile  # جلب ملف المستخدم المسجل حاليًا
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+
 
  
 

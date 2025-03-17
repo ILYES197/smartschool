@@ -34,6 +34,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'   
+        
+        
+        
  
 class TransferRequestSerializer(serializers.ModelSerializer):
     class Meta:
