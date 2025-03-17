@@ -11,8 +11,10 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 #from .models import CustomUser
 from rest_framework import generics
-from account.models import Profile
+from rest_framework.permissions import IsAuthenticated
+from .models import Profile
 from .serializers import ProfileSerializer
+
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -56,16 +58,18 @@ def current_user(request):
 
 # views.py
  
-class ProfileListCreateView(generics.ListCreateAPIView):
+
+
+class ProfileListView(generics.ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]  # يجب أن يكون المستخدم مسجلاً للدخول
 
-class ProfileRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+# استرجاع ملف شخصي واحد عبر الـ ID
+class ProfileDetailView(generics.RetrieveAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-
-
- 
+    permission_classes = [IsAuthenticated]
 
  
 
