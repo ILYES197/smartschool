@@ -33,9 +33,13 @@ from account.models import Profile
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['birth_date', 'address']  # هنا حدد غير الحقول لي تحب تحدثهم
+        fields = '__all__'  # هذا يرجع جميع الحقول
         
-        
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['birth_date', 'address']
+       
  
 class TransferRequestSerializer(serializers.ModelSerializer):
     class Meta:
