@@ -50,23 +50,38 @@ def register(request):
         return Response(user.errors)
     
     
-@api_view(['GET'])
+@api_view(['GET' , 'PUT'])
 @permission_classes([IsAuthenticated])
 def current_user(request):
     user = UserSerializer(request.user, many=False)
     return Response(user.data)
 
 # views.py 
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Profile
 from .serializers import ProfileSerializer
 
-class UserProfileView(APIView):
-    permission_classes = [IsAuthenticated]  # يجب أن يكون المستخدم مسجلاً للدخول
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def profile_view(request):
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        return Response({"detail": "Profile does not exist."}, status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, request):
-        profile = request.user.profile  # جلب ملف المستخدم المسجل حاليًا
+    if request.method == 'GET':
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = ProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
  
