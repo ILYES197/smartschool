@@ -33,8 +33,7 @@ from account.models import Profile
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = '__all__'
-        read_only_fields = ['user', 'referral_link', 'account_number']
+        fields = ['birth_date', 'address']  # هنا حدد غير الحقول لي تحب تحدثهم
         
         
  

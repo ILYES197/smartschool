@@ -20,14 +20,20 @@ class Profile(models.Model):
     balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # الرصيد المالي
     transfer_count = models.IntegerField(default=0)  # عدد مرات التحويل
     referral_link = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)  # رابط الإحالة الفريد
-
+    referred_by = models.ForeignKey(
+    User, 
+    null=True, 
+    blank=True, 
+    on_delete=models.SET_NULL, 
+    related_name='referrals'
+)
     def __str__(self):
         return f"{self.user.id} - {self.first_name} {self.last_name}"
 
     def get_referral_link(self):
         """إرجاع رابط الإحالة الخاص بالمستخدم"""
         return f"https://futuresite.online/register/?ref={self.referral_link}&user={self.user.username}"
-
+ 
 # 🔹 إنشاء الملف الشخصي تلقائيًا عند إنشاء المستخدم
 @receiver(post_save, sender=User)
 def create_or_update_profile(sender, instance, created, **kwargs):

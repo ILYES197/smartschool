@@ -25,30 +25,45 @@ from .serializers import TransferRequestSerializer
 @api_view(['POST'])
 def register(request):
     data = request.data
-    user = SingUpSerializer(data = data)
+    user_serializer = SingUpSerializer(data=data)
 
-    if user.is_valid():
+    if user_serializer.is_valid():
         if not User.objects.filter(username=data['email']).exists():
             user = User.objects.create(
-                first_name = data['first_name'],
-                last_name = data['last_name'], 
-                email = data['email'] , 
-                #phone_number=data['phone_number'] , # إضافة رقم الهاتف
-                username = data['email'] , 
-                password = make_password(data['password']),
+                first_name=data['first_name'],
+                last_name=data['last_name'],
+                email=data['email'],
+                username=data['email'],
+                password=make_password(data['password']),
             )
+
+            # نحاول نجيب ref من الرابط (من ال request)
+            referral_code = data.get('referral_code')  # ممكن تجيه من الفورم أو رابط
+            if referral_code:
+                try:
+                    referred_profile = Profile.objects.get(referral_link=referral_code)
+                    user.profile.referred_by = referred_profile.user
+                    user.profile.save()
+                except Profile.DoesNotExist:
+                    pass  # إذا كان referral code خطأ، نتجاهلو
+
+            referral_link = user.profile.get_referral_link()
+
             return Response(
-                {'details':'Your account registered susccessfully!' },
-                    status=status.HTTP_201_CREATED
-                    )
+                {
+                    'details': 'Your account registered successfully!',
+                    'referral_link': referral_link
+                },
+                status=status.HTTP_201_CREATED
+            )
         else:
             return Response(
-                {'eroor':'This email already exists!' },
-                    status=status.HTTP_400_BAD_REQUEST
-                    )
+                {'error': 'This email already exists!'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
     else:
-        return Response(user.errors)
-    
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
 @api_view(['GET' , 'PUT'])
 @permission_classes([IsAuthenticated])
