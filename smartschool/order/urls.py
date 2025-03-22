@@ -10,4 +10,4 @@ urlpatterns = [
 
     path('user-orders/', UserOrdersView.as_view(), name='user-orders'),
 
-]
+]   
