@@ -31,9 +31,20 @@ SECRET_KEY = 'django-insecure-r6gi(889=xf98l05y(zl-#7hy5*c-nn*nf7sjtcp1mpk&=ug74
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = [
      'smartschool.pythonanywhere.com',
     ]
+=======
+
+ALLOWED_HOSTS = [
+    'smartschool.pythonanywhere.com',
+    '127.0.0.1',
+    'localhost',
+]
+
+
+>>>>>>> 7cb928f279a365f5e97b4268eb287317d67d7e1e
 
 # Application definition
 

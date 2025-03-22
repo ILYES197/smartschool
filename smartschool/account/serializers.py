@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 from rest_framework import serializers
 from django.contrib.auth.models import User
+=======
+from django.contrib.auth.models import User
+from rest_framework import serializers
+from account.models import Profile
+from .models import TransferRequest
+
+
+>>>>>>> 7cb928f279a365f5e97b4268eb287317d67d7e1e
 #from  .models import CustomUser  
 
 class SingUpSerializer(serializers.ModelSerializer):
@@ -20,4 +29,31 @@ class UserSerializer(serializers.ModelSerializer):
      
     class Meta:
         model =  User
+<<<<<<< HEAD
         fields = ('first_name','last_name', 'email', 'username' ) 
+=======
+        fields = ('first_name','last_name', 'email', 'username' ) 
+        
+# serializers.py
+from rest_framework import serializers
+from account.models import Profile
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'  # هذا يرجع جميع الحقول
+        
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['birth_date', 'address']
+       
+ 
+class TransferRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TransferRequest
+        fields = '__all__'   
+        read_only_fields = ['id', 'created_at']  # جعل بعض الحقول للقراءة فقط
+
+ 
+>>>>>>> 7cb928f279a365f5e97b4268eb287317d67d7e1e

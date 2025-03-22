@@ -5,8 +5,15 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import formation  
 from .serializers import FormationSerializer
+<<<<<<< HEAD
  
 from django.db.models import Avg
+=======
+from django.db.models import Avg
+from .models import Comment
+from .serializers import CommentSerializer
+from rest_framework import generics, permissions
+>>>>>>> 7cb928f279a365f5e97b4268eb287317d67d7e1e
 
 # Create your views here.
 
@@ -24,3 +31,15 @@ def get_by_id_formation(request,pk):
     serializer = FormationSerializer(formations,many=False)
     print(formations)
     return Response({"formations":serializer.data})
+<<<<<<< HEAD
+=======
+
+
+class CommentListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # المستخدمون المسجّلون فقط يمكنهم التعليق
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # تعيين المستخدم تلقائيًا
+>>>>>>> 7cb928f279a365f5e97b4268eb287317d67d7e1e

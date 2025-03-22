@@ -26,3 +26,16 @@ class formation(models.Model):
      def __str__(self):
         return self.name
 
+<<<<<<< HEAD
+=======
+from django.contrib.auth.models import User
+from django.db import models
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)  # ربط التعليق بالمستخدم
+    content = models.TextField()  # نص التعليق
+    created_at = models.DateTimeField(auto_now_add=True)  # وقت الإضافة
+
+    def __str__(self):
+        return f"تعليق من {self.user.get_full_name() if self.user else 'مجهول'}"
+>>>>>>> 7cb928f279a365f5e97b4268eb287317d67d7e1e
